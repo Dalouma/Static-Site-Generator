@@ -10,23 +10,23 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node2)
 
     def test_capitalization(self):
-        node = TextNode("Capitalized or Not", TextType.NORMAL)
-        node2 = TextNode("capitalized or not", TextType.NORMAL)
+        node = TextNode("Capitalized or Not", TextType.TEXT)
+        node2 = TextNode("capitalized or not", TextType.TEXT)
         self.assertNotEqual(node, node2)
 
     def test_link_absence(self):
-        node = TextNode("random text", TextType.NORMAL)
-        node2 = TextNode("random text", TextType.NORMAL, "")
+        node = TextNode("random text", TextType.TEXT)
+        node2 = TextNode("random text", TextType.TEXT, "")
         self.assertNotEqual(node, node2)
 
     def test_text_type_diff(self):
-        node = TextNode("random text", TextType.NORMAL)
+        node = TextNode("random text", TextType.TEXT)
         node2 = TextNode("random text", TextType.BOLD)
         self.assertNotEqual(node, node2)
 
     def test_NONE_url(self):
-        node = TextNode("random text", TextType.NORMAL)
-        node2 = TextNode("random text", TextType.NORMAL, None)
+        node = TextNode("random text", TextType.TEXT)
+        node2 = TextNode("random text", TextType.TEXT, None)
         self.assertEqual(node, node2)
 
 
