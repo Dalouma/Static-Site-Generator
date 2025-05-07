@@ -1,4 +1,7 @@
 from enum import Enum
+import re
+
+
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -7,6 +10,12 @@ class BlockType(Enum):
     QUOTE = "quote"
     UNORDERED_LIST = "unordered list"
     ORDERED_LIST = "ordered list"
+
+def extract_markdown_images(text):
+    return re.findall(r"!\[(.*?)\]\((.*?)\)", text)
+
+def extract_markdown_links(text):
+    return re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)", text)
 
 def markdown_to_blocks(markdown):
     return list(filter(lambda block: block, map(lambda block: block.strip(), markdown.split("\n\n"))))
@@ -44,3 +53,4 @@ def block_to_block_type(block):
         return BlockType.ORDERED_LIST
     
     return BlockType.PARAGRAPH
+

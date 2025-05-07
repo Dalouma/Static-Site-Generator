@@ -1,6 +1,6 @@
 import unittest
 
-from helper_functions import *
+from converters import *
 
 class TestTextNodeToHTMLNode(unittest.TestCase):
     def test_text(self):

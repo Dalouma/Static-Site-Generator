@@ -1,5 +1,5 @@
 import unittest
-from helper_functions import *
+from converters import *
 
 class TestSplitRegex(unittest.TestCase):
     def test_split_images(self):
