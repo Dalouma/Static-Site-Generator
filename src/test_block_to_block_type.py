@@ -40,11 +40,11 @@ class TestBlockToBlockType(unittest.TestCase):
 
     def test_incorrect_ordering(self):
         block = "1. Item 1\n32. Item 2\n3. Item 3"
-        self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
+        self.assertEqual(block_to_block_type(block), BlockType.ORDERED_LIST)
 
     def test_incorrect_ordering_two(self):
         block = "1. Item 1\n2. Item 2\n32. Item 3"
-        self.assertEqual(block_to_block_type(block), BlockType.PARAGRAPH)
+        self.assertEqual(block_to_block_type(block), BlockType.ORDERED_LIST)
 
     def test_empty_item(self):
         block = "1. item one\n2. \n3. item three"
