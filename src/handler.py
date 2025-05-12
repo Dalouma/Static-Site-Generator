@@ -20,7 +20,7 @@ def copy_static(src_path, dest_path):
             copy_static(original, new_path)
 
 def generate_page(from_path, template_path, dest_path):
-    print(f"Generating page from {from_path} to {dest_path} usnig {template_path}")
+    print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     md = None
     with open(from_path) as f:
@@ -34,8 +34,20 @@ def generate_page(from_path, template_path, dest_path):
     title = extract_title(md)
     page = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
 
-    if os.path.exists(dest_path) == False:
-        os.mkdir(dest_path)
-
-    with open(os.path.join(dest_path, "index.html"), 'w') as f:
+    with open(dest_path, 'w') as f:
         f.write(page)
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    for entry in os.listdir(dir_path_content):
+        original = os.path.join(dir_path_content, entry)
+        
+
+        if os.path.isfile(original) and ".md" in entry:
+            new_file_name = entry.replace(".md", ".html")
+            new_path = os.path.join(dest_dir_path, new_file_name)
+            generate_page(original, template_path, new_path)
+        else:
+            new_path = os.path.join(dest_dir_path, entry)
+            if os.path.exists(new_path) == False:
+                os.mkdir(new_path)
+            generate_pages_recursive(original, template_path, new_path)
