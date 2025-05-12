@@ -2,7 +2,6 @@ from enum import Enum
 import re
 
 
-
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
     HEADING = "heading"
@@ -44,3 +43,9 @@ def block_to_block_type(block):
     
     return BlockType.PARAGRAPH
 
+def extract_title(md):
+    blocks = markdown_to_blocks(md)
+    for block in blocks:
+        if block[:2] == "# ":
+            return block.lstrip("# ")
+    raise Exception("h1 not found")

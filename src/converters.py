@@ -75,8 +75,9 @@ def determine_children(block, block_type):
             return [text_node_to_html_node(TextNode(content, TextType.CODE))]
         case BlockType.QUOTE:
             content = "".join(map(lambda line: line.lstrip("> "), block.splitlines(True)))
-            content_blocks = markdown_to_blocks(content)
-            return list(map(lambda x: ParentNode('p', text_to_children(x.replace('\n', ' '))), content_blocks))
+            return text_to_children(content)
+            # content_blocks = markdown_to_blocks(content)
+            # return list(map(lambda x: ParentNode('p', text_to_children(x.replace('\n', ' '))), content_blocks))
         case BlockType.UNORDERED_LIST:
             return list(map(lambda line: ParentNode('li', text_to_children(line.lstrip("- "))), block.splitlines()))
         case BlockType.ORDERED_LIST:
