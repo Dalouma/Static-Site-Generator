@@ -19,7 +19,7 @@ def copy_static(src_path, dest_path):
         else:
             copy_static(original, new_path)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     md = None
@@ -33,11 +33,12 @@ def generate_page(from_path, template_path, dest_path):
     html = markdown_to_html_node(md).to_html()
     title = extract_title(md)
     page = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
+    page = page.replace('href="/', f'href="{base_path}').replace('src="/', f'src="{base_path}')
 
     with open(dest_path, 'w') as f:
         f.write(page)
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, base_path):
     for entry in os.listdir(dir_path_content):
         original = os.path.join(dir_path_content, entry)
         
@@ -45,9 +46,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
         if os.path.isfile(original) and ".md" in entry:
             new_file_name = entry.replace(".md", ".html")
             new_path = os.path.join(dest_dir_path, new_file_name)
-            generate_page(original, template_path, new_path)
+            generate_page(original, template_path, new_path, base_path)
         else:
             new_path = os.path.join(dest_dir_path, entry)
             if os.path.exists(new_path) == False:
                 os.mkdir(new_path)
-            generate_pages_recursive(original, template_path, new_path)
+            generate_pages_recursive(original, template_path, new_path, base_path)
